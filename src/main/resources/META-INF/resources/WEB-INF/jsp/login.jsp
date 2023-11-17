@@ -50,6 +50,7 @@
 <%--    Welcome to the login page!--%>
     <form method="post">
         <h2>Login</h2>
+        <pre>${errorMessage}</pre>
         <label for="username">Username:</label>
         <input type="text" id="username" name="name" required>
 
