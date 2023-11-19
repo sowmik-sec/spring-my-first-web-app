@@ -1,5 +1,6 @@
 package com.sowmik.myfirstwebapp.todo;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public class TodoService {
     private static List<Todo> todos = new ArrayList<>();
     private static int todosCount = 0;
     static {
-        todos.add(new Todo(++todosCount, "sowmik", "Learn AWS", LocalDate.now().plusYears(1), false));
+        todos.add(new Todo(++todosCount, "sowmik", "Get AWS Certified", LocalDate.now().plusYears(1), false));
         todos.add(new Todo(++todosCount, "sowmik", "Learn DevOps", LocalDate.now().plusYears(1), false));
         todos.add(new Todo(++todosCount, "sowmik", "Learn Full Stack Development", LocalDate.now().plusYears(1), false));
     }
@@ -28,5 +29,15 @@ public class TodoService {
         //todo -> todo.getId() == id
         Predicate<? super Todo> predicate = todo -> todo.getId() == id;
         todos.removeIf(predicate);
+    }
+
+    public Todo findById(int id) {
+        Predicate<? super Todo> predicate = todo -> todo.getId() == id;
+        return todos.stream().filter(predicate).findFirst().get();
+    }
+
+    public void updateTodo(@Valid Todo todo) {
+        deleteById(todo.getId());
+        todos.add(todo);
     }
 }
